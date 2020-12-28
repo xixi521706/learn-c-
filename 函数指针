@@ -1,0 +1,27 @@
+#include <stdio.h>
+int Mul(int x, int y)
+{
+	return x*y;
+}
+int Div(int x, int y)
+{
+	return x / y;
+}
+int Sub(int x, int y)
+{
+	return x - y;
+}
+int Add(int x, int y)
+{
+	return x + y;
+}
+int main()
+{
+	int(*parr[4])(int, int) = { Mul, Div, Sub, Add };//创建一个数组，数组每个元素为int(*)(int ,int)
+	int i = 0;
+	for (; i < 4; i++)
+	{
+		printf("%d\n", parr[i](2, 3));                 //parr等价于数组名或者可以这样写，(*(parr+i))(2,3)
+	}
+	return 0;
+}

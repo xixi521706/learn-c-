@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <string>
+int main()
+{
+	char* p = "abbcdfe";
+
+	printf("%d\n", sizeof(p));//p是字符串的首地址（数组的地址）     求指针大小  4  字节 
+	printf("%d\n", sizeof(&p));//&P为取数组的 地址，意义不同下           地址    4
+	printf("%d\n", sizeof(p[0]));  //                             首元素地址   1
+	printf("%d\n", sizeof(&p + 1));  //                         跳过数组后地址大小  4
+	printf("%d\n", sizeof(*p));   //                                  元素大小  1
+	printf("%d\n", sizeof(&p[0]));  //       首元素取地址                         4
+	printf("%d\n", sizeof(*(&p + 1))); // 数组后的地址元素                          随机    非法访问
+
+
+
+
+	printf("%d\n", strlen(p));  //  strlen库函数 （地址参数）       数组的长度    7   字节                      
+	printf("%d\n", strlen(p + 1));  //                             首地址为'b'     6
+//	printf("%d\n", strlen(*p));   //库函数参数为地址   所以实际计算 'a'时，相当于地址变为97，此时属于非法访问     error 
+	printf("%d\n", strlen(&p[1]));//  取p的地址作参数，由于P的地址在提取和存放规则不同，比如P的地址为0x11223344，作为参数是strlen的参数地址变为0x44332211   随机值
+
+}

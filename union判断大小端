@@ -1,0 +1,21 @@
+//公用体公用初始位置
+#include <stdio.h>
+int check()
+{
+	union un
+	{
+		int i;
+		char n;
+	}u;
+	u.i = 1;        //判断u.n为0的话大端
+	return u.n;
+}
+int main()
+{
+	int ret = check();
+	if (ret)
+		printf("小端\n");
+	else
+		printf("大端\n");
+	return 0;
+}

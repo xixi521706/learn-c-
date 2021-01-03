@@ -1,0 +1,20 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+int main()
+{
+    int* p=(int*)malloc(5*sizeof(int));    //动态内存函数malloc.   void* malloc(size_t size)
+    int* p2=(int*)calloc(num,sizeof(int)); //calloc参数两个,类型num/类型
+    int* p3=(int*)realloc(p1,40)   //void* realloc(void* ptr,size_t new_size) 原指针ptr后追加new_size个字节，如果函数实现成功，返回新的指针或者之前的指针（之前的地址内容复制），否则NULL
+    assert(p != NULL);                          //动态函数返回指针： 返回空指针判断，防止后面对空指针的错操作，编译奔溃
+    int i=0;
+    for(i=0;i<5;i++)
+       {
+          *(p+i)=i;
+          printf("%d ,",*(p+i));
+       }
+    printf("\n");
+    free(p);                                       //释放内存
+    p=NULL;                                        //内存释放完，指针变量为空NULL
+    return 0;
+}

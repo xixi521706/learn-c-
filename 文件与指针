@@ -1,0 +1,39 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+
+typedef struct S
+{
+	int a;
+	char name[20];
+	char ch;
+};
+int main()
+{
+	char buf[100] = { 0 };
+	S s = { 100, "hello\\world", 'c' };
+	S tmp;                                          
+	sprintf(buf, "%d.%s.%c", s.a, s.name, s.ch);             //把格式化的数据转化为字符存储在字符串buf，，，从后往前读
+	printf("%s\n", buf);
+	sscanf(buf, "%d.%s.%c", &(tmp.a), tmp.name, &(tmp.ch));   //从buf中读取格式化字符到变量地址中
+	printf("%d.%s.%c\n", tmp.a, tmp.name, tmp.ch);
+	return 0;
+}
+
+
+示例2：
+int main()
+{
+	FILE* fp = fopen("test.txt", "w");               //fopen函数  FILE* fpoen(const char* filename ,char* Mod）
+	if (fp == NULL)
+	{
+		printf("%s\n", strerror(errno));
+	}
+	int ch=fputc(100, fp);
+	printf("%d\n", ch);
+  fclose(fp);
+  fp=NULL;
+	return 0;
+}

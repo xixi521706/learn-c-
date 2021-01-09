@@ -1,0 +1,49 @@
+#include<stdio.h>
+#include<assert.h>
+#include<stdlib.h>
+
+struct treeNode
+{
+     char data;
+     struct treeNode* lchild;
+     struct treeNode* rchild;
+};
+struct treeNode* creat_treeNode(char data)                                            //创建节点
+{
+     struct treeNode* treeNode = (struct treeNode*)malloc(sizeof(struct treeNode));    //初始化节点
+     assert(treeNode != NULL);
+     treeNode->data = data;
+     treeNode->lchild = NULL;
+     treeNode->rchild = NULL;
+     return treenode;
+}
+void insert(struct treeNode* curnode,struct treeNode* leftnode,struct treeNode* rightnode)    //节点互联成二叉树
+{
+     curnode->lchild = leftnode;
+     curnode->rchild = rightnode;
+}
+void print(struct treeNode* curnode)     //遍历方式,打印
+{
+     printf("%c\t",curnode->data);
+}
+void midorder(struct treeNode* curnode)  //中序遍历，根放在中间，默认都是二叉树从左往右遍历
+{
+     if(curnode != NULL)
+     {
+          midorder(curnode->lchild);
+          print(curnode);
+          midorder(curnode->rchild);
+     }
+}
+int main()
+{
+     struct treeNode* A = creat_treeNode('A');
+     struct treeNode* B = creat_treeNode('B');
+     struct treeNode* C = creat_treeNode('C');
+     struct treeNode* D = creat_treeNode('D');
+     struct treeNode* E = creat_treeNode('E');
+     insert(B,A,D);
+     insert(D,C,E);
+     midorder(B);
+     return 0;
+}

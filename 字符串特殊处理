@@ -1,0 +1,41 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#define DEBUG
+#include <stdio.h>
+#include <string>
+
+void reverse(char* ptr, int len)
+{
+	char* ps = (char*)malloc(len*sizeof(char));
+	if (ps == NULL)
+		return;
+	char* p = ptr;
+	while (*ptr != '\0')
+	{
+		if (*ptr != ' ')
+		{
+			ptr++;
+		}
+		else
+		{
+			for (int i = 0; i < (ptr - p); i++)
+			{
+				ps[len + i - 1 - (ptr - p)] = (*(p + i));
+			}
+			ps[len - 2 - (ptr - p)] = ' ';
+			p = ptr;
+			ptr++;
+		}
+	}
+	ps[len - 1] = '\0';
+	strcpy(ptr, ps);
+	free(ps);
+	ps = NULL;
+}
+int main()
+{
+	char ch[] = "This is a sample";
+	int len = strlen(ch) + 1;
+	reverse(ch, len);
+	printf("%s\n", ch);
+	return 0;
+}

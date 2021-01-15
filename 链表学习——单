@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Lnode
+{
+    ElemType data;
+    struct LNode* next;
+}LNode,*linklist;
+
+bool insett_i(linklist& L,int i,ElemType e)                     //表头开始第i个位置插入一个节点，赋值data
+{
+    LNode* p,q=(LNode*)malloc(sizefo(LNode));
+    p=L;
+    int j=0;
+    if(i<1 && q== NULL)
+        return false;
+    while(p !=NULL && j<i-1)
+    {
+        p=p->next;
+        j++;
+    }
+    if(p == NULL)
+        return false;
+    q->next=p->next;
+    q->data=e;
+    p->next=q;
+    return true;
+}
+
+bool insert_frondnode（LNode* p,ElemType e)                   //没有表头,在p节点的前面加入一个节点，赋值data   思想：在p后面增加一个节点，然后交换和P的数据，这样就相当于在前面增加了接单
+{
+     LNode* q=(LNode*)malloc(sizeof(LNode));
+     if(q == NULL || p == NULL)
+         return false;
+     p->data=e;
+     q->next=p->next;
+     p->next=q;
+     return true;
+}
+int main()
+{
+    linklist L;
+    ElemType e;
+    LNode* p;
+    bool a=insert_i(L,i,e);
+    bool b=insert_frondnode(p,e)
+    return 0;
+}

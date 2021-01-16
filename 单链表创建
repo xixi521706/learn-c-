@@ -1,0 +1,67 @@
+#include <stdio.h>               //尾插法
+
+typedef struct node
+{
+    ElemType data;
+    struct node* next;
+}LNode,*linklist;
+
+linklist creat_linklist(linklist &L)
+{
+    linklist r=L;
+    ElemType x;
+
+    p=L;
+    scanf("%d:,&x);
+    while(x ! 9999)
+    {
+        LNode* p=(LNode*)malloc(sizeof(LNode));
+        r->next=p;
+        p->data=x;
+        r=p;
+        scanf9("%d",&x);
+    }
+    r->next=NULL;
+    return L;
+     
+}
+int main()
+{ 
+    linklist L;
+    linklist ret=creat_linklist(L);
+    return 0;
+}
+
+//头插法
+#include <stdio.h>
+
+typedef struct node
+{
+    ElemType data;
+    struct node* next;
+}LNode,*linklist;
+
+LNode* head_linklist(LNode* q)
+{
+    if(q == NULL)
+       return NULL;
+    ElemType data;
+    scanf("%d",&data);
+    while(data != 9999)
+    {
+        LNode* p=(LNode*)malloc(sizeof(LNode));
+            if(p == NULL)
+                 return q;
+        p->data=data;
+        p->next=q->next;
+        q->next=p;
+        scanf("%d",&data);
+    }
+    return q;
+}
+int main()
+{
+    LNode* q;
+    linklist ret=head_linklist(q);
+    return 0;
+}

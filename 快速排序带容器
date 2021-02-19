@@ -1,0 +1,31 @@
+#include <iostream>
+#include <stdlib.h>
+#include <array>
+#include <ctime>
+using namespace std;
+
+int pivotsort(int arr,int left,int right){
+    int pivot=right;
+    int rightbound=right-1;
+    while(left<=right){                                      //边界问题，如果此时没有left==right,存在特殊情况比如pivot位的左边全部小于arr[pivot]，不能交换pivot和left,否则顺序错误
+        while(left<=right && arr[left]<=arr[pivot]) left++;  //如果此时没有left==right，相等时没有比较此时位置的值与arr[pivot]，不能确定中间边界
+        while(left<=right && arr[rightbound] > arr[pivot]) rightbound--;
+        arr.swap(left,rightbound);
+    }
+    arr.swap(left,pivot);
+}
+void qsort(int* arr,int left,int right){
+    if(left >= right)
+        return;
+    int mid=pivotsort(arr,left,right);
+    _qsort(arr,left,mid-1);
+    _qsort(arr,mid+1,right);
+}
+int main(){
+    array<int,20>arr;
+    for(int i=0;i<20;i++){
+        arr[i]=rand();
+    }
+    _qsort(arr,0,arr.size());
+    return 0;
+}

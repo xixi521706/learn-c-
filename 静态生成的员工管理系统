@@ -1,0 +1,234 @@
+//main.cpp
+#include "Employee.h"
+#include "Technician.h"
+#include "Manager.h"
+#include "Salseman.h"
+#include "SalManager.h"
+#include <typeinfo>
+
+int main(){
+	Employee* emp[] = { new Technician, new Manager, new Salseman, new SalManager };
+	for (int i = 0; i < sizeof(emp) / sizeof(emp[0]); i++){
+		emp[i]->init();                                    //"平推"形成多态
+		if (typeid(*emp[i]) == typeid(Manager)){           //找"平",用到类型检查，动态类型转换
+			Manager*t = dynamic_cast<Manager*>(emp[i]);
+			t->addficsalary(5000);
+		}
+		emp[i]->calflary();
+		emp[i]->promte();
+		emp[i]->disinfo();
+	}
+	return 0;
+}
+
+//Employee.h     
+#pragma once
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Employee{              //base class
+public:
+	string name;                //public，成员在子类继承了公有属性，均可以对其修改，如果时protected则只能访问不能修改，若为private，虽继承但不可见
+	int num;
+	float slary;
+	int grade;
+public:
+	Employee();
+	virtual void init() = 0;    //对子类提供接口的纯虚函数  ，抽象基类
+	virtual void disinfo() = 0;
+	virtual void calflary() = 0;
+	virtual void promte() = 0;
+	~Employee();
+private:
+	static int base_num;      //static变量，所有子类都继承，对象不能直接访问须通过函数调用
+};
+
+//Employee.cpp
+#include "Employee.h"       //类外定义构造器，析构器，成员函数
+Employee::Employee()
+{
+	grade = 1;
+	num = base_num++;
+}
+int Employee::base_num = 1000;  //类外定义static变量
+Employee::~Employee()
+{
+}
+
+//Technician.h                 //public base
+#pragma once
+#include "Employee.h"
+class Technician :	public Employee{
+public:
+	Technician();
+	void init();                //废除构造器，以免再多继承中出现shadow
+	virtual void disinfo();
+	virtual void calflary();
+	virtual void promte();
+	~Technician();
+private:
+	int houramount;             //对子类不可见
+	float hourtime;
+};
+
+//Technician.cpp
+#include "Technician.h"
+Technician::Technician(){
+}
+void Technician::init(){
+	cout << "请输入技术员工的姓名:";
+	cin >> name;
+	cout << "请输入技术员工的工作时间：";
+	cin >> hourtime;
+	houramount = 100;
+}
+void Technician::disinfo(){
+	cout << name << endl;
+	cout << num << endl;
+	cout << slary << endl;
+	cout << grade << endl;
+	cout << endl;
+}
+void Technician::calflary(){
+	slary = houramount*hourtime;
+}
+void Technician::promte(){
+	grade = 3;
+}
+Technician::~Technician()
+{
+}
+
+//Manager.h
+#pragma once
+#include "Employee.h"
+class Manager :virtual public Employee   //virtual public base虚继承，防止shadow
+{
+public:
+	Manager();
+	void init();                  //此处函数加不加virtual均为函数覆写（抽象）                        
+	void addficsalary(float s);   //类成员函数，类对象访问
+	virtual void disinfo();
+	virtual void calflary();
+	virtual void promte();
+	~Manager();
+protected:
+	int fixsalary;
+};
+
+//Manager.cpp
+#include "Manager.h"
+Manager::Manager(){
+}
+void Manager::init(){
+	cout << "请输入经理的姓名:";
+	cin >> name;
+	fixsalary = 10000;
+}
+void Manager::addficsalary(float s){
+	fixsalary += s;
+}
+void Manager::disinfo(){
+	cout << name << endl;
+	cout << num << endl;
+	cout << slary << endl;
+	cout << grade << endl;
+	cout << endl;
+}
+void Manager::calflary(){
+	slary = fixsalary;
+}
+void Manager::promte(){
+	grade = 4;
+}
+Manager::~Manager(){
+}
+
+//Salseman.h
+#pragma once
+#include "Employee.h"
+class Salseman :virtual public Employee
+{
+public:
+	Salseman();
+	void init();
+	virtual void disinfo();
+	virtual void calflary();
+	virtual void promte();
+	~Salseman();
+protected:
+	float monthAmount;
+	float rate;
+};
+
+//Salseman.cpp
+#include "Salseman.h"
+Salseman::Salseman(){
+}
+void Salseman::init(){
+	cout << "请输入销售员工的姓名:";
+	cin >> name;
+	cout << "请输入销售员工的月销售额:";
+	cin >> monthAmount;
+	rate = 0.04;
+}
+void Salseman::disinfo(){
+	cout << name << endl;
+	cout << num << endl;
+	cout << slary << endl;
+	cout << grade << endl;
+	cout << endl;
+}
+void Salseman::calflary(){
+	slary = monthAmount*rate;
+}
+void Salseman::promte(){
+	grade = 1;
+}
+Salseman::~Salseman(){
+}
+
+//SalManager.h
+#pragma once
+#include "Salseman.h"
+#include "Manager.h"
+class SalManager:public Salseman,public Manager
+{
+public:
+	SalManager();
+	void init();
+	virtual void disinfo();
+	virtual void calflary();
+	virtual void promte();
+	~SalManager();
+};
+
+//SalManager.cpp
+#include "SalManager.h"
+SalManager::SalManager(){
+}
+void SalManager::init(){
+	cout << "请输入销售经理的姓名:";
+	cin >> name;
+	cout << "请输入销售经理的销售额:";
+	cin >> monthAmount;
+	cout << endl;
+	fixsalary = 7000;
+	rate = 0.05;
+}
+void SalManager::disinfo(){
+	cout << name << endl;
+	cout << num << endl;
+	cout << slary << endl;
+	cout << grade << endl;
+	cout << endl;
+}
+void SalManager::calflary(){
+	slary = fixsalary + monthAmount*rate;
+}
+void SalManager::promte(){
+	grade = 3;
+}
+SalManager::~SalManager(){
+}

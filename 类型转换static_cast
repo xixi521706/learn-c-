@@ -1,0 +1,15 @@
+#include <iostream>
+using namespace std;
+
+class Base{};
+class Child:public Base{};
+class Other{};
+int main(){
+	Base* base;
+	Child* child =static_cast<Child*>(base);
+	Child* child2;
+	Base* base1 = static_cast<Base*>(child2);
+	Child child3;
+	Base* base3 = &child3;
+	return 0;
+}

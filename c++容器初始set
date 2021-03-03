@@ -1,0 +1,20 @@
+#include <iostream>  
+#include <vector>  
+#include <set>  
+  
+using namespace std;  
+  
+int main(void)  
+{  
+    vector<int> ivect;  
+    for (vector<int>::size_type i=0; i<9; i++)  
+    {  
+        ivect.push_back(i);  
+        ivect.push_back(i);  
+    }  
+      
+    set<int> iset(ivect.begin(), ivect.end());   //和map一样，每个键值对应一个元素
+    cout << ivect.size() << endl;                //18
+    cout << iset.size() << endl;                 //9
+    return 0;  
+}  

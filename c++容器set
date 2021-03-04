@@ -1,0 +1,23 @@
+#include <set>
+#include <iostream>
+using namespace std;
+int main()
+{
+// 注意，我插入的元素是乱序、有重复的
+set<int> sInt;
+sInt.insert(10);
+sInt.insert(15);
+sInt.insert(11);
+sInt.insert(17);
+sInt.insert(13);
+sInt.insert(19);
+sInt.insert(19); // 重复插入，被 set 容器舍弃
+// 打印二叉树的数据
+set<int>::iterator i, iend;
+22 iend = sInt.end();
+for (i=sInt.begin(); i!=iend; ++i)
+cout << *i << ' ';
+cout << endl;
+ 
+return 0;
+}

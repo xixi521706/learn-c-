@@ -1,0 +1,70 @@
+#include <iostream>
+using namespace std;
+
+/*void maxchild(int arr[], int len){
+	int begin = -1;
+	int end = -1;
+	int max = -90;
+	for (int i = 1; i < len; i++){              //子序列起始位置
+		for (int j = i; j < len; j++){          //子序列结束位置
+			int sum = 0;
+			for (int k = i; k <= j; k++){       //计算子序列的和
+				sum += arr[k];
+			}
+			if (sum > max){
+				max = sum;
+				begin = i;
+				end = j;
+			}
+		}
+	}
+	cout << "最大子序列和为:" << max << "子序列为：" << begin << "+" << end << endl;
+}
+*/
+
+//void maxchild(int arr[], int len){
+//		int begin = -1;
+//		int end = -1;
+//		int max = -90;
+//		for (int i = 1; i < len; i++){          //每次子序列起始位置
+//			int sum = 0;
+//			for (int j = i; j < len; j++){     //子序列后序元素，每次元素++时比较上一次sum和max，更新max
+//				sum += arr[j];  
+//				if (sum > max){
+//					max = sum;
+//					begin = i;
+//					end = j;
+//				}
+//			}
+//		}
+//		cout << "最大子序列和为:" << max << endl;
+//		cout<< "子序列为：" << begin << "+" << end << endl;
+//}
+
+void maxchild(int arr[], int len){
+	int subsum = arr[0];
+	int substart = 0;
+	int max = -90;
+	int begin = -1;
+	int end = -1;
+	for (int i = 1; i < len; i++){
+		if (subsum < 0){         //从第一个>0的数开始遍历
+			substart = i;
+			subsum = arr[i];
+		}
+		else                          //遍历后面每个元素统计一次和，更新max
+			subsum += arr[i];
+		if (subsum > max){            //保存max，begin
+			max = subsum;
+			begin = substart;
+			end = i;
+		}
+	}
+	cout << "最大子序列和为:" << max << "子序列为：" << begin << "+" << end << endl;
+}
+int main(){
+	int arr[] = { -3, 4, -1, 5, -2, 6, -7, 8 };
+	int len = sizeof(arr) / sizeof(arr[0]);
+	maxchild(arr,len);
+	return 0;
+}

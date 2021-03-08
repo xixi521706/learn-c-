@@ -1,0 +1,79 @@
+#include<iostream>
+#include<cmath>
+#include<sstream>
+#include<string>
+#include<cstring>
+#include<map>
+#include<set>
+#include<queue> 
+#include<vector>
+#include<algorithm>
+using namespace std;
+ 
+int ans = 0;
+int dir[4][2] = {0,-1,-1,0,-1,-1,-1,1};
+int book[10][10];
+int a[10][10];
+int vis[10];
+ 
+/*左，上，左上，右上*/
+bool check(int r,int c,int val)
+{
+    for(int k = 0;k < 4;++k)
+	{
+		int tr = r + dir[k][0];
+		int tc = c + dir[k][1];
+		if(tr < 1 || tc < 1 || tr > 3 || tc > 4)  continue;
+		if(abs(a[tr][tc]-val) <= 1)  return false;
+	}	
+	
+	return true;
+}
+ 
+void dfs(int row,int col)
+{
+	if(row == 3 && col == 4)
+	{
+		ans++;
+		return ;
+	}
+	
+	if(col == 5)
+	{
+		row += 1;
+		col = 1;
+	}
+	
+	
+	
+	for(int i = 0;i <= 9;++i)
+    {
+    	if(!book[row][col] && !vis[i] && check(row,col,i))
+    	{
+    		book[row][col] = 1;
+    		vis[i] = 1;
+    		a[row][col] = i;
+    		dfs(row,col+1);
+    		book[row][col] = 0;
+    		vis[i] = 0;
+    		a[row][col] = -2;
+    	}
+    	
+    }
+ 
+}
+ 
+ 
+ 
+int main()
+{
+	for(int i = 0;i <= 5;++i)
+	{
+		for(int j = 0;j <= 9;++j)
+		     a[i][j] = -2;
+	}
+	
+	dfs(1,2);
+	printf("%d\n",ans); 
+	return 0;
+}
